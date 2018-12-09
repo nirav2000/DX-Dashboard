@@ -1,16 +1,40 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous">
-</script>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+        <script
+          src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous">
+        </script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
+    </head>
+    <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tutorials
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">WETH-RDN</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">WETH-</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+            </ul>
+          </div>     
 <canvas id="canvas"></canvas>
 
+
+        <div id="demo"></div>
+      
+      
+</html>
 <script>
 var jsonfile;
 var dataNextVol= 'https://dutchx-rinkeby.d.exchange/api/v1/markets/WETH-RDN/sell-volume-next';
-var dataurl = 'https://dutchx-rinkeby.d.exchange/api/v1/auctions/cleared?';//https://dutchx-rinkeby.d.exchange/api/v1/markets/WETH-RDN/sell-volume';
+var dataurl = 'https://dutchx-rinkeby.d.exchange/api/v1/auctions/cleared?';
+var dataTokens = 'https://dutchx-rinkeby.d.exchange/api/v1/tokens';
+//https://dutchx-rinkeby.d.exchange/api/v1/markets/WETH-RDN/sell-volume';
 //https://nirav2000.github.io/DX-Dashboard/JSON.json
 function c8chart (params) {
 $.getJSON(dataurl +params, function(jdata) {
@@ -50,5 +74,36 @@ $.getJSON(dataurl +params, function(jdata) {
 
 
 c8chart("period=today&tokenPair=WETH-RDN");
+
+function c8tokens () {
+    $.getJSON(dataTokens, function(jdata) {
+        }).done(function(jdata) {
+            console.log(jdata.data);
+            var i;var text="";
+for (i = 0; i < jdata.data.length; i++) { 
+  text += '<tr>'+jdata.data[i].symbol + '</tr>';
+
+}
+ee= '<table class="table"><tbody>'+text+"</tbody></table>"
+console.log(ee);
+            document.getElementById("demo").innerHTML =ee;//jdata.data[0].symbol;
+            //var tokens = jdata.map(function(e) {
+
+               // return e.buyToken;
+              //  });
+            
+        })
+    .fail(function(
+        jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
+        console.log( "Request Failed: " + err );
+        console.log( "error" );
+    });
+}
+
+c8tokens();
+//$( "div.demo-container" ).html();
 </script>
+
+
 
