@@ -9,15 +9,19 @@
 
 <script>
 var jsonfile;
-
-$.getJSON('https://nirav2000.github.io/DX-Dashboard/JSON.json', function(jdata) {
+var dataNextVol= 'https://dutchx-rinkeby.d.exchange/api/v1/markets/WETH-RDN/sell-volume-next';
+var dataurl = 'https://dutchx-rinkeby.d.exchange/api/v1/auctions/cleared?';//https://dutchx-rinkeby.d.exchange/api/v1/markets/WETH-RDN/sell-volume';
+//https://nirav2000.github.io/DX-Dashboard/JSON.json
+function c8chart (params) {
+$.getJSON(dataurl +params, function(jdata) {
     }).done(function(jdata) {
         console.log(jdata);
-        var labels = jdata.jsonarray.map(function(e) {
-            return e.name;
+        var labels = jdata.map(function(e) {
+
+            return e.buyToken;
             });
-        var data = jdata.jsonarray.map(function(e) {
-            return e.age;
+        var data = jdata.map(function(e) {
+            return e.buyVolume;
             });
 
         var ctx = canvas.getContext('2d');
@@ -42,6 +46,9 @@ $.getJSON('https://nirav2000.github.io/DX-Dashboard/JSON.json', function(jdata) 
     console.log( "Request Failed: " + err );
     console.log( "error" );
   });
+}
 
+
+c8chart("period=today&tokenPair=WETH-RDN");
 </script>
 
