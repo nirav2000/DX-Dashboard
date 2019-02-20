@@ -39,13 +39,15 @@ var $form = $('form#test-form'),
 
 $('#submit-form').on('click', function(e) {
   e.preventDefault();
+  var jsonObject = $( this ).serializeObject();
   var jqxhr = $.ajax({
     url: url,
     method: "GET",
     dataType: "json",
-    data: $form.serializeObject()
+    data: jsonobject
   }).success(
     // do something
   );
 })
+
 </script>
